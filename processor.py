@@ -35,7 +35,6 @@ class DocumentProcessor:
     def __init__(self):
         self.logger = ProcessingLogger()
         self.ocr_engine = OCREngine(self.logger)
-        # Removed ContextExtractor as per streamlined version
         self.content_formatter = ContentFormatter(self.logger)
     
     def save_output(self, pdf_path: Path, content: str) -> Optional[str]:
@@ -60,19 +59,10 @@ class DocumentProcessor:
     def process_document(self, uploaded_file, page_ranges_str: Optional[str] = None, progress_callback: Optional[Callable] = None) -> ProcessingResult:
         """
         Process a PDF document through the complete OCR pipeline.
-        
-        Args:
-            uploaded_file: Uploaded PDF file
-            page_ranges_str: Optional page ranges string (e.g., "1-5, 10, 15-20")
-            progress_callback: Optional callback for progress updates
-            
-        Returns:
-            ProcessingResult containing all processing information
         """
         start_time = time.time()
         
         try:
-            # Validate input
             if not uploaded_file:
                 return ProcessingResult(
                     content="Please upload a PDF file.",
@@ -114,7 +104,7 @@ class DocumentProcessor:
                     if progress_callback:
                         progress_callback(f"📖 Processing page {page_no} ({i+1}/{len(page_numbers)})")
                     
-                    page = doc[page_no - 1]  # Convert to 0-indexed for fitz
+                    page = doc[page_no - 1]
                     text = self.ocr_engine.extract_page_text(page, page_no)
                     page_texts[page_no] = text
             
@@ -134,14 +124,14 @@ class DocumentProcessor:
                     )
                     formatted_pages.append(formatted)
             
-            # Build final document
             self.logger.log_section("Document Assembly")
-            header = self.content_formatter.build_document_header(document_title)
+            # Use the simple header approach
+            header = f"# {document_title}\n\n"
             
             if page_ranges_str and page_ranges_str.strip():
-                header += f"\n\n**Pages Processed:** {page_ranges_str}"
+                header += f"**Pages Processed:** {page_ranges_str}\n\n"
             
-            final_content = f"{header}\n\n---\n\n" + "\n\n---\n\n".join(formatted_pages)
+            final_content = f"{header}---\n\n" + "\n\n---\n\n".join(formatted_pages)
             
             output_file = self.save_output(pdf_path, final_content)
             
@@ -186,11 +176,8 @@ class DocumentProcessor:
     
     def _extract_document_title(self, filename: str) -> str:
         """Extract a clean document title from filename."""
-        # Remove file extension and clean up
         title = os.path.splitext(os.path.basename(filename))[0]
-        # Replace underscores and hyphens with spaces
         title = title.replace('_', ' ').replace('-', ' ')
-        # Capitalize words
         title = ' '.join(word.capitalize() for word in title.split())
         return title if title else "Document"
     
