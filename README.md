@@ -11,25 +11,14 @@ pinned: false
 
 SmolDocling-256M-preview reference: https://huggingface.co/ds4sd/SmolDocling-256M-preview
 
-# DocTags Implementation - Simplified Approach
+# Current Solution
 
-## What Happened?
-
-The initial implementation attempted to use the full DocTags format with the docling library, but we encountered some compatibility issues:
-
-1. **DocTags Generation**: SmolDocling can generate DocTags, but the docling library is primarily designed to *convert TO* DocTags, not parse them
-2. **API Differences**: The docling-core types have different APIs than initially expected
-
-## Current Solution
-
-We've implemented a **simplified approach** that still provides the benefits of structured document understanding:
-
-### 1. **Native Docling Support** (when available)
+## 1. **Native Docling Support** (when available)
 - For supported formats (PDF, DOCX, PPTX), we use the native docling library
 - This provides proper DocTags export and multiple format conversions
 - Falls back to SmolDocling if native processing fails
 
-### 2. **Structure-Aware SmolDocling** (main approach)
+## 2. **Structure-Aware SmolDocling** (main approach)
 - Uses SmolDocling with prompts designed to extract document structure
 - Identifies elements like:
   - Titles and headings
@@ -39,7 +28,7 @@ We've implemented a **simplified approach** that still provides the benefits of 
   - Figures and captions
 - Outputs structured text that preserves document semantics
 
-### 3. **Dual Output**
+## 3. **Dual Output**
 - **Markdown**: Human-readable formatted output
 - **Structured Text**: Shows document structure with tags like [TITLE], [TABLE], [LIST], etc.
 
