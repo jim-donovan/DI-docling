@@ -30,14 +30,14 @@ class Config:
 
     # For formatting and context extraction (OpenAI)
     # Options: "gpt-4o", "gpt-4", "gpt-4-turbo", "gpt-3.5-turbo", "o1-preview", "o1-mini"
-    formatting_model: str = "gpt-4"  # Change this to "gpt-4" or other models
-    context_model: str = "gpt-4o"     # Can be different from formatting model
+    formatting_model: str = "gpt-5"  # Change this to "gpt-4" or other models
+    context_model: str = "gpt-5"     # Can be different from formatting model
 
     # Model parameters
     temperature: float = 0.0
     # Slightly higher for more creative formatting
     formatting_temperature: float = 0.1
-    # max_output_tokens: int = 4096  # Increased for better formatting
+    max_output_tokens: int = 8000  # Increased for better formatting
 
     # Fallback model for when SmolDocling fails
     fallback_vision_model: str = "gpt-4o"  # For OpenAI Vision API fallback

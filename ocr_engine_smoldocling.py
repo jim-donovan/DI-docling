@@ -163,9 +163,9 @@ Output text exactly as it appears with spatial relationships intact."""
 
                 # Generate text
                 generation_kwargs = {
-                    "max_new_tokens": 8200,
+                    "max_new_tokens": 8000,
                     "do_sample": False,
-                    "temperature": 1.0,
+                    "temperature": 0.1,
                     "pad_token_id": self.processor.tokenizer.pad_token_id,
                     "eos_token_id": self.processor.tokenizer.eos_token_id,
                 }
