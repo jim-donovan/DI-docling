@@ -1,0 +1,31 @@
+# Core dependencies for DI-Docling Document Processing
+
+# Web UI
+gradio>=4.44.0
+
+# Document processing - Primary
+docling>=2.0.0                # Primary document processor (try 2.5.2 if issues)
+# Alternative if above fails: pip install docling-core>=2.0.0 docling>=2.0.0
+
+# Document processing - Support
+PyMuPDF>=1.23.0               # PDF handling and fallback
+pypdf>=3.17.0                 # Additional PDF support
+Pillow>=10.0.0                # Image processing
+
+# OCR fallback (SmolDocling)
+transformers>=4.36.0          # For SmolDocling model
+torch>=2.0.0                  # Deep learning framework
+torchvision>=0.15.0           # Vision utilities
+accelerate>=0.25.0           # Model optimization
+pytesseract>=0.3.10          # Traditional OCR fallback
+
+# Utilities
+numpy>=1.24.0                 # Numerical operations
+python-dotenv>=1.0.0         # Environment variables
+pydantic>=2.0.0              # Data validation
+opencv-python>=4.8.0         # Image processing
+
+# Note: If docling import fails, try:
+# pip uninstall docling docling-core -y
+# pip install docling-core>=2.0.0
+# pip install docling>=2.0.0

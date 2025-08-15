@@ -1,0 +1,20 @@
+# macOS system files
+.DS_Store
+
+# Environment files
+.env
+
+# Python virtual environments
+.venv/
+__pycache__/
+
+# IDE or editor specific
+.vscode/
+*.swp
+
+# Compiled files
+*.pyc
+*.pyo
+
+# Archives or other build output
+archive/
